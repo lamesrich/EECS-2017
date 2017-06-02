@@ -16,7 +16,8 @@
 #include <time.h>
 
 #define SZ 200
-static int seats [SZ] = {0};
+static int seatingChart [SZ] = {0};
+
 static int A_s =0;
 static int A_e =50;
 
@@ -61,7 +62,7 @@ void Menu()
         {
             case 1:
                 printf("Case 1 activates\n");
-                Itinerary();//SeatSelA();
+                SeatSelA();
                 break;
             case 2:
                 printf("Case 2 activates\n");
@@ -87,7 +88,6 @@ void SeatSelA()
 {
 
     int tickets=0; 
-    float cost=50.00;
     int i=0;
     int seatSel=0;
     static int ct=0;
@@ -97,35 +97,30 @@ void SeatSelA()
     printf("A How many tickets: \n");
     /*scanf("%d", &tickets);*/
     printf("A before while  \n");
-    tickets=25;
-
-    if(ct==1)
-    {
-        tickets = 10;
-        A_s=40;
-    }
+    tickets=50;
     
+        
     while(tickets>0 && A_s<A_e)
     {
-         seats[A_s]=1;  
-         
-         
-         A_s++;
-         tickets--;
+        seatingChart[A_s]=1;  
+
+
+        A_s++;
+        tickets--;
     }
-    if(ct==0)
+   /* if(ct==0)
     {
         ct++;
        SeatSelB();
        
-    }
+    }*/
     
-    
-    printf("\nA print whole array\n\n");
+    printf("");
+   printf("\nA print whole array \n\n");
     
     for(i=0; i<200; i++)
     {
-        printf("%4d", seats[i]);
+        printf("%4d", seatingChart[i]);
     }
     
     printf("\n\n");
@@ -161,7 +156,7 @@ void SeatSelB()
     {
         printf("\nB while loop");
         
-        seats[B_s+10]=B_s;
+        seatingChart[B_s+10]=B_s;
         custSeats[i]=B_s;
         i++; /* customer seating ticket incrementor*/
         B_s++;
@@ -169,7 +164,7 @@ void SeatSelB()
         
     }
     printf("\nend of while\n\n");
-    Itinerary(custSeats, size);
+    // Itinerary(custSeats, size);
     SeatSelA();
 }/*End of Seatsel()*/
 
@@ -197,7 +192,7 @@ void SeatSelC()
     
     for(i=secCStart; i<secCEnd; i++)
     {
-         seats[i]=1;            
+         seatingChart[i]=1;            
 
     }
     
@@ -205,56 +200,42 @@ void SeatSelC()
     
     for(i=secCStart; i<secCEnd; i++)
     {
-        printf("%4d", seats[i]);
+        printf("%4d", seatingChart[i]);
     }
     
     printf("\n\n");
 }/*End of Seatsel()*/
 void Itinerary()//(int cusSeats [], int sz, int price)
 {
-    int i=0, sz=5;
+    int i=0;
+    const int sz=5;
     int total=0;
+    int price =0;
+    int cusSeats[5]={50, 100, 63, 18, 10};
     int ct=0;
-    printf("\n\n\nPrinting Itinerary\n");
-    /*for(i=0; i<10; i++)
+    printf("\n\n\nPrinting Itinerary\n");   
+    while(ct < sz)
     {
-        printf("%4d", cusSeats[i]);
-    }*/
+         ct++;
+        if(cusSeats[i]<50)
+        {
+            price =50;
+            printf("Ticket %d\nSection A\nSeat: %d\nPrice $%d.00\n\n",ct, cusSeats[ct], price);
+        }
+        if(cusSeats[ct]<100 && cusSeats[ct]>50)
+        {
+            price =60;
+            printf("Ticket %d\nSection B\nSeat: %d\nPrice $%d.00\n\n",ct, cusSeats[ct], price);
+        }
+        if(cusSeats[ct]>=100)
+        {
+            price =70;
+            printf("Ticket %d\nSection C\nSeat: %d\nPrice $%d.00\n\n",ct, cusSeats[ct], price);
+        }
+       
+        total = total + price;
+        i++;
+    }/*end of while*/
     
-    while(sz>0)
-    {
-        if(cusSeats[i]<=50)
-        {
-            printf("Section A\nSeat: %d\nPrice: %d", cursSeats[i], price);
-        }
-        if(cusSeats[i]<100 && cusSeats[i]>50)
-        {
-            printf("Section B\nSeat: %d\nPrice: %d", cursSeats[i], price);
-        }
-        if(cusSeats[i]>=100)
-        {
-            printf("Section C\nSeat: %d\nPrice: %d", cursSeats[i], price);
-        }
-        
-        sz--;
-    }
-    
-    for(i=0; i<10; i++)
-    {
-        
-        if(i==9 && ct==0)
-        {
-            printf("\n\n");
-            ct=1;
-            i=0;
-            
-        }
-        else
-        {
-            printf(" * ");
-        }
-    }
-    
-    
-     printf("\n\n\n\n");
-}
+     printf("Total due: $%d.00\n\n", total);
+}/*end of Itinerary function*/
